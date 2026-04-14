@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Faro – Periódico Digital</title>
+
+  <!-- ============================================================
+       PASO 1 – TIPOGRAFÍA EXTERNA (Requisito 1)
+       Se importan tres fuentes desde Google Fonts:
+       - Playfair Display: títulos y encabezados
+       - Source Serif 4:  cuerpo de texto / artículos
+       - Oswald:          etiquetas, navegación y elementos utilitarios
+  ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&family=Oswald:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+
+    /* ============================================================
+       RESET & VARIABLES CSS
+       Elimina márgenes y paddings por defecto del navegador.
+       Se definen variables de color reutilizables en todo el sitio.
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:      #1a1209;   /* Color tinta oscura (negro periódico) */
+      --paper:    #f5f0e8;   /* Color papel antiguo (crema) */
+      --paper2:   #ede8dc;   /* Papel secundario ligeramente más oscuro */
+      --red:      #c0392b;   /* Color rojo institucional */
+      --red-dark: #922b21;   /* Rojo oscuro para sombras */
+      --gold:     #c8963e;   /* Dorado para detalles decorativos */
+      --gray:     #7a7060;   /* Gris para textos secundarios */
+    }
+
+    html { scroll-behavior: smooth; }
+
+    /* ============================================================
+       PASO 2 – FONDO GRIS GENERAL (Requisito 2)
+       Se aplica el fondo gris #f5f5f5 al cuerpo de la página.
+       También se define la tipografía base (Source Serif 4).
+    ============================================================ */
+    body {
+      background-color: #f5f5f5; /* Fondo gris general del sitio */
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif; /* Tipografía principal aplicada a todos los elementos */
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       PASO 6 – ESTILOS DE VÍNCULOS (Requisito 6)
+       Los enlaces tienen subrayado por defecto (estado normal).
+       Al pasar el mouse: negrita y se quita el subrayado.
+    ============================================================ */
+    a {
+      color: inherit;               /* El vínculo hereda el color del elemento padre */
+      text-decoration: underline;   /* Subrayado visible cuando el mouse NO está encima */
+      transition: font-weight 0.1s;
+    }
+
+    a:hover {
+      font-weight: bold;            /* Negrita al pasar el cursor */
+      text-decoration: none;        /* Se quita el subrayado al pasar el cursor */
+    }
+
+    /* ============================================================
+       HEADER – Cabecera del periódico
+       Contiene la barra superior de información, el masthead
+       con el nombre "El Faro" y el logo SVG.
+    ============================================================ */
+    header {
+      background-color: var(--ink);
+      color: var(--paper);
+      text-align: center;
+      padding: 0;
+    }
+
+    /* Barra superior roja con fecha y edición */
+    .header-top-bar {
+      background-color: var(--red);
+      font-family: 'Oswald', sans-serif; /* Tipografía Oswald para la barra utilitaria */
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--paper);
+      padding: 6px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Zona central del header con logo y título */
+    .masthead {
+      padding: 28px 20px 18px;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .masthead-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+    }
+
+    /* Círculo que contiene el logo SVG del faro */
+    .logo-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--red);
+      border: 3px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-circle svg { width: 44px; height: 44px; fill: var(--paper); }
+
+    /* Título principal "El Faro" con fuente Playfair Display */
+    .masthead-text h1 {
+      font-family: 'Playfair Display', serif; /* Playfair Display para el nombre del periódico */
+      font-size: 4.2rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--paper);
+      text-shadow: 3px 3px 0 var(--red-dark);
+    }
+
+    /* Subtítulo/tagline en cursiva dorada */
+    .masthead-tagline {
+      font-family: 'Source Serif 4', serif; /* Source Serif 4 para el tagline */
+      font-style: italic;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       NAVEGACIÓN – Barra de navegación fija (sticky)
+       Permite cambiar entre secciones del periódico sin recargar.
+    ============================================================ */
+    nav {
+      background-color: var(--ink);
+      border-top: 2px solid var(--gold);
+      border-bottom: 2px solid var(--gold);
+      position: sticky; /* Se mantiene fija al hacer scroll */
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Botones de navegación con fuente Oswald */
+    nav button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Oswald', sans-serif; /* Oswald para botones de navegación */
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--paper);
+      padding: 14px 32px;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    /* Línea roja que aparece debajo del botón activo */
+    nav button::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%; right: 50%;
+      height: 3px;
+      background: var(--red);
+      transition: left 0.25s, right 0.25s;
+    }
+
+    nav button:hover { color: var(--gold); }
+
+    nav button.active { color: var(--gold); }
+    nav button.active::after { left: 0; right: 0; }
+
+    /* ============================================================
+       CONTENIDO PRINCIPAL
+       Limita el ancho del contenido para mejor legibilidad.
+    ============================================================ */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 36px 20px 60px;
+    }
+
+    /* Control de visibilidad de secciones (toggle con JS) */
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* Encabezado de cada sección con título y etiqueta */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    /* Título de sección con Playfair Display */
+    .section-heading h2 {
+      font-family: 'Playfair Display', serif; /* Playfair Display para títulos de sección */
+      font-size: 2.1rem;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+
+    /* Etiqueta coloreada que identifica la sección */
+    .section-label {
+      background: var(--red);
+      color: var(--paper);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    /* Línea divisoria decorativa */
+    .divider {
+      height: 2px;
+      background: linear-gradient(to right, var(--ink), transparent);
+      margin-bottom: 28px;
+    }
+
+    /* ============================================================
+       PASO 3 – GRILLA DE ARTÍCULOS (Requisito 3)
+       TÉCNICA AVANZADA: CSS Grid con auto-fit y minmax().
+       Esto genera automáticamente columnas responsivas:
+       - En pantallas grandes: 3 columnas
+       - En pantallas medianas: 2 columnas
+       - En móviles: 1 columna (ver @media más abajo)
+    ============================================================ */
+    .articulos-grid {
+      display: grid; /* Activar CSS Grid Layout */
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* auto-fit crea columnas dinámicas */
+      gap: 20px;        /* Espacio entre tarjetas */
+      margin-bottom: 40px;
+    }
+
+    /* ============================================================
+       PASO 2a – FONDO BLANCO EN ARTÍCULOS (Requisito 2a)
+       Cada bloque/tarjeta de artículo tiene fondo blanco,
+       mientras el fondo general de la página es gris.
+    ============================================================ */
+    .articulo-card {
+      background-color: #ffffff;  /* Fondo blanco para cada bloque de artículo */
+      border-radius: 6px;
+      padding: 22px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); /* Sombra sutil para efecto de tarjeta */
+      transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave para el hover */
+    }
+
+    /* ============================================================
+       PASO 4 – HOVER EN BLOQUES: fondo negro + letra blanca (Requisito 4)
+       Al pasar el cursor sobre una tarjeta de artículo,
+       el fondo cambia a negro y el texto a blanco.
+    ============================================================ */
+    .articulo-card:hover {
+      background-color: #000000; /* Fondo negro al pasar el mouse */
+      color: #ffffff;             /* Letra blanca al pasar el mouse */
+      cursor: pointer;
+    }
+
+    /* Las etiquetas de categoría mantienen legibilidad en hover */
+    .articulo-card:hover .news-cat {
+      opacity: 0.85;
+    }
+
+    /* Título del artículo dentro de la tarjeta */
+    .articulo-titulo {
+      font-family: 'Playfair Display', serif; /* Playfair Display para títulos de artículos */
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    /* Enlace en el título del artículo */
+    .articulo-titulo a {
+      color: inherit; /* Hereda color del padre (se vuelve blanco en hover) */
+    }
+
+    /* Etiqueta de categoría del artículo */
+    .news-cat {
+      display: inline-block;
+      font-family: 'Oswald', sans-serif; /* Oswald para etiquetas de categoría */
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--red);
+      color: var(--paper);
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 10px;
+    }
+
+    /* Colores específicos por sección */
+    .news-cat.deporte  { background: #1a6b3c; }
+    .news-cat.negocios { background: #1a4a7a; }
+
+    /* Cuerpo de texto del artículo con Source Serif 4 */
+    .news-text {
+      font-family: 'Source Serif 4', serif; /* Source Serif 4 para el cuerpo de los artículos */
+      font-size: 0.88rem;
+      color: inherit; /* Hereda color para que se vea blanco en hover */
+      line-height: 1.55;
+      margin-top: 8px;
+    }
+
+    /* ============================================================
+       SECCIÓN MULTIMEDIA – Video y Podcast
+       Usa CSS Grid de dos columnas para organizar los reproductores.
+    ============================================================ */
+    .media-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Dos columnas para multimedia */
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    /* Tarjeta de contenido multimedia */
+    .media-card {
+      background: var(--paper2);
+      border: 1px solid #d6cebb;
+      border-radius: 4px;
+      padding: 20px;
+    }
+
+    /* Título de tarjeta multimedia */
+    .media-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Icono circular para video/audio */
+    .media-icon {
+      width: 24px; height: 24px;
+      background: var(--red);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .media-icon svg { width: 12px; height: 12px; fill: white; }
+
+    /* Reproductores de video y audio ocupan todo el ancho disponible */
+    video, audio { width: 100%; border-radius: 4px; outline: none; }
+    video { background: #000; aspect-ratio: 16/9; }
+
+    /* Leyenda/caption del contenido multimedia */
+    .media-caption {
+      font-size: 0.78rem;
+      color: var(--gray);
+      font-style: italic;
+      margin-top: 8px;
+    }
+
+    /* ============================================================
+       ARTÍCULO DESTACADO – Bloque con borde izquierdo coloreado
+       Se muestra al final de cada sección como nota de análisis.
+    ============================================================ */
+    .featured-article {
+      background: var(--paper2);
+      border-left: 4px solid var(--red);
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .featured-article h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 8px 0 6px;
+    }
+
+    /* ============================================================
+       PASO 5 – ESTILOS DEL FOOTER (Requisito 5)
+       Color de Fondo: #c9d2d0
+       Color de Letra: #31231e
+    ============================================================ */
+    footer {
+      background-color: #c9d2d0; /* Fondo específico del footer según requisito */
+      color: #31231e;             /* Color de letra específico del footer según requisito */
+      text-align: center;
+      padding: 24px 20px;
+      font-family: 'Oswald', sans-serif; /* Oswald para el footer */
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* El nombre del periódico en el footer en color dorado */
+    footer span { color: var(--gold); }
+
+    /* ============================================================
+       RESPONSIVIDAD – Media Queries (Requisito Responsivo)
+       Para pantallas pequeñas (celulares) los artículos se muestran
+       en una sola columna, facilitando la lectura en móvil.
+    ============================================================ */
+    @media (max-width: 600px) {
+
+      /* Una sola columna en pantallas pequeñas (vista celular) */
+      .articulos-grid {
+        grid-template-columns: 1fr; /* Una columna para móvil */
+      }
+
+      /* La grilla multimedia también pasa a una columna */
+      .media-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Se reduce el tamaño del título principal en móvil */
+      .masthead-text h1 { font-size: 2.8rem; }
+
+      /* Los botones de nav se hacen más compactos */
+      nav button { padding: 12px 16px; font-size: 0.8rem; }
+    }
+
+    /* ============================================================
+       NUEVOS ESTILOS – SEMANA 4
+       Estilos para: contador de artículos, formulario de artículo,
+       formulario de contacto y sección de contacto.
+    ============================================================ */
+
+    /* Contador de artículos – badge rojo en el encabezado de sección */
+    .article-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-left: auto; /* Empuja el contador al extremo derecho */
+      border: 1px solid var(--gold);
+    }
+
+    .article-counter span {
+      background: var(--red);
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    /* Formulario para agregar artículos */
+    .form-agregar {
+      background: var(--paper2);
+      border: 1px solid #d6cebb;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      padding: 22px 24px;
+      margin-bottom: 32px;
+    }
+
+    .form-agregar h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--ink);
+    }
+
+    /* Estilos compartidos para inputs y textarea */
+    .form-agregar input,
+    .form-agregar textarea,
+    .form-contacto input,
+    .form-contacto textarea {
+      width: 100%;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.88rem;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid #c9bfa8;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s;
+      display: block;
+    }
+
+    .form-agregar input:focus,
+    .form-agregar textarea:focus,
+    .form-contacto input:focus,
+    .form-contacto textarea:focus {
+      border-color: var(--red);
+    }
+
+    .form-agregar textarea,
+    .form-contacto textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    /* Botón de envío con estilo del periódico */
+    .btn-enviar {
+      background: var(--red);
+      color: var(--paper);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 28px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-enviar:hover { background: var(--red-dark); }
+
+    /* Mensaje de éxito al enviar */
+    .msg-exito {
+      display: none; /* Oculto por defecto, JS lo mostrará */
+      background: #1a6b3c;
+      color: white;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      padding: 8px 14px;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+
+    /* Formulario de contacto */
+    .form-contacto {
+      background: var(--paper2);
+      border: 1px solid #d6cebb;
+      border-left: 4px solid var(--red);
+      border-radius: 0 6px 6px 0;
+      padding: 28px 32px;
+      max-width: 600px;
+    }
+
+    .form-contacto h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--ink);
+    }
+
+    /* Label de formulario */
+    .form-label {
+      display: block;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 600px) {
+      .section-heading { flex-wrap: wrap; }
+      .article-counter { margin-left: 0; margin-top: 8px; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER: Cabecera del periódico ===== -->
+<header>
+  <!-- Barra superior roja con fecha, edición y lema -->
+  <!-- PASO 1: El span#reloj-header será actualizado cada segundo por JavaScript -->
+  <div class="header-top-bar">
+    <span id="reloj-header">Cargando fecha...</span>
+    <span>Edición Digital &bull; Año I &bull; N° 1</span>
+    <span>Informando con Luz Propia</span>
+  </div>
+
+  <!-- Masthead con logo y nombre del periódico -->
+  <div class="masthead">
+    <div class="masthead-inner">
+      <!-- Logo SVG: icono de faro/lighthouse -->
+      <div class="logo-circle">
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cuerpo de la torre del faro -->
+          <rect x="26" y="20" width="12" height="30" rx="2"/>
+          <!-- Parte superior de la torre -->
+          <rect x="22" y="14" width="20" height="8" rx="2"/>
+          <!-- Luz del faro (círculo) -->
+          <circle cx="32" cy="11" r="5"/>
+          <!-- Rayos de luz -->
+          <line x1="32" y1="5" x2="32" y2="2" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <line x1="37" y1="6.5" x2="40" y2="4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <line x1="27" y1="6.5" x2="24" y2="4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <!-- Base del faro -->
+          <rect x="20" y="50" width="24" height="5" rx="2"/>
+          <!-- Escalones de la base -->
+          <rect x="16" y="55" width="32" height="4" rx="1"/>
+          <!-- Franjas decorativas en la torre -->
+          <rect x="26" y="27" width="12" height="3" rx="1" fill="#c0392b" opacity="0.7"/>
+          <rect x="26" y="37" width="12" height="3" rx="1" fill="#c0392b" opacity="0.7"/>
+        </svg>
+      </div>
+
+      <!-- Texto del masthead: nombre y tagline -->
+      <div class="masthead-text">
+        <h1>El Faro</h1>
+        <p class="masthead-tagline">Periódico Digital &mdash; Informando con luz propia desde 2026</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== NAV: Barra de navegación entre secciones ===== -->
+<nav>
+  <div class="nav-inner">
+    <!-- Botón para la sección de noticias generales -->
+    <button class="active" onclick="showSection('inicio', this)">Inicio</button>
+    <!-- Botón para la sección de deportes -->
+    <button onclick="showSection('deporte', this)">Deporte</button>
+    <!-- Botón para la sección de negocios -->
+    <button onclick="showSection('negocios', this)">Negocios</button>
+    <!-- Botón para la sección de contacto (NUEVO - Requerimiento 3) -->
+    <button onclick="showSection('contacto', this)">Contacto</button>
+  </div>
+</nav>
+
+<!-- ===== MAIN: Contenido principal del periódico ===== -->
+<main>
+
+  <!-- ===================== SECCIÓN INICIO ===================== -->
+  <section id="inicio" class="section active">
+
+    <!-- Encabezado de la sección con título, etiqueta y CONTADOR (Requerimiento 4) -->
+    <div class="section-heading">
+      <h2>Noticias Generales</h2>
+      <span class="section-label">Inicio</span>
+      <!-- PASO 4: El contador muestra cuántos artículos hay.
+           id="contador-inicio" será actualizado por JS cada vez que se agregue uno. -->
+      <div class="article-counter">
+        Artículos: <span id="contador-inicio">0</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- PASO 2: Formulario para agregar artículos dinámicos (Requerimiento 2)
+         Campos: título del artículo, descripción del artículo, botón Publicar. -->
+    <div class="form-agregar">
+      <h3>✏️ Publicar nuevo artículo</h3>
+      <label class="form-label" for="titulo-inicio">Título del artículo</label>
+      <input type="text" id="titulo-inicio" placeholder="Ej: Chile lidera en energías renovables...">
+      <label class="form-label" for="desc-inicio">Descripción del artículo</label>
+      <textarea id="desc-inicio" placeholder="Escribe el contenido del artículo aquí..."></textarea>
+      <button class="btn-enviar" onclick="agregarArticulo('inicio', 'General')">Publicar artículo</button>
+      <div class="msg-exito" id="exito-inicio">✔ Artículo publicado correctamente.</div>
+    </div>
+
+    <!-- PASO 2: Contenedor vacío. JS renderizará las tarjetas de artículo aquí. -->
+    <div class="articulos-grid" id="grid-inicio"></div>
+
+    <!-- Sección multimedia se mantiene igual -->
+    <div class="media-grid">
+
+      <!-- Tarjeta de Video -->
+      <div class="media-card">
+        <h3>
+          <span class="media-icon">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </span>
+          Reportaje en Video
+        </h3>
+        <!-- Reproductor de video con source de archivo local -->
+        <video controls poster="">
+          <source src="Videoenergia.mp4" type="video/mp4" />
+          Tu navegador no soporta la etiqueta de video.
+        </video>
+        <p class="media-caption">Reportaje especial: Energías renovables en Chile – El Faro TV, marzo 2026.</p>
+      </div>
+
+      <!-- Tarjeta de Audio/Podcast -->
+      <div class="media-card">
+        <h3>
+          <span class="media-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3z"/></svg>
+          </span>
+          Podcast El Faro
+        </h3>
+        <br/>
+        <!-- Reproductor de audio con source de archivo local -->
+        <audio controls>
+          <source src="Cern.mp3" type="audio/mpeg" />
+          Tu navegador no soporta la etiqueta de audio.
+        </audio>
+        <p class="media-caption">Podcast semanal – «Chile digital: oportunidades y desafíos en 2026».</p>
+        <br/>
+        <p class="news-text">En este episodio, nuestros periodistas analizan los principales hitos tecnológicos y educativos de la semana, con entrevistas a especialistas y actores del sector público y privado. Un espacio para reflexionar sobre el presente y el futuro del país.</p>
+      </div>
+
+    </div><!-- /media-grid -->
+
+  </section><!-- /inicio -->
+
+
+  <!-- ===================== SECCIÓN DEPORTE ===================== -->
+  <section id="deporte" class="section">
+
+    <!-- Encabezado con contador (Requerimiento 4) -->
+    <div class="section-heading">
+      <h2>Noticias de Deporte</h2>
+      <span class="section-label" style="background:#1a6b3c;">Deporte</span>
+      <div class="article-counter">
+        Artículos: <span id="contador-deporte">0</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- Formulario agregar artículo – Deporte (Requerimiento 2) -->
+    <div class="form-agregar">
+      <h3>✏️ Publicar nuevo artículo de Deporte</h3>
+      <label class="form-label" for="titulo-deporte">Título del artículo</label>
+      <input type="text" id="titulo-deporte" placeholder="Ej: La Roja vence en amistoso internacional...">
+      <label class="form-label" for="desc-deporte">Descripción del artículo</label>
+      <textarea id="desc-deporte" placeholder="Escribe el contenido del artículo aquí..."></textarea>
+      <button class="btn-enviar" onclick="agregarArticulo('deporte', 'Deporte')">Publicar artículo</button>
+      <div class="msg-exito" id="exito-deporte">✔ Artículo publicado correctamente.</div>
+    </div>
+
+    <!-- Contenedor dinámico – JS renderiza las tarjetas aquí -->
+    <div class="articulos-grid" id="grid-deporte"></div>
+
+    <!-- Artículo destacado de deporte con borde verde -->
+    <div class="featured-article" style="border-left-color:#1a6b3c;">
+      <span class="news-cat deporte">Análisis</span>
+      <h3>El deporte chileno en alza: un año para recordar</h3>
+      <p class="news-text">Chile vive un período dorado en el deporte de alto rendimiento. Con medallas mundiales en tiro al plato, ascensos en el tenis profesional y una generación de jóvenes futbolistas prometedores, el país se proyecta como una potencia deportiva regional. Las inversiones públicas y privadas en infraestructura deportiva, sumadas a programas de detección temprana de talentos, están comenzando a dar sus frutos.</p>
+    </div>
+
+  </section><!-- /deporte -->
+
+
+  <!-- ===================== SECCIÓN NEGOCIOS ===================== -->
+  <section id="negocios" class="section">
+
+    <!-- Encabezado con contador (Requerimiento 4) -->
+    <div class="section-heading">
+      <h2>Negocios &amp; Emprendimiento</h2>
+      <span class="section-label" style="background:#1a4a7a;">Negocios</span>
+      <div class="article-counter">
+        Artículos: <span id="contador-negocios">0</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- Formulario agregar artículo – Negocios (Requerimiento 2) -->
+    <div class="form-agregar">
+      <h3>✏️ Publicar nuevo artículo de Negocios</h3>
+      <label class="form-label" for="titulo-negocios">Título del artículo</label>
+      <input type="text" id="titulo-negocios" placeholder="Ej: Startup chilena cierra ronda de inversión...">
+      <label class="form-label" for="desc-negocios">Descripción del artículo</label>
+      <textarea id="desc-negocios" placeholder="Escribe el contenido del artículo aquí..."></textarea>
+      <button class="btn-enviar" onclick="agregarArticulo('negocios', 'Negocios')">Publicar artículo</button>
+      <div class="msg-exito" id="exito-negocios">✔ Artículo publicado correctamente.</div>
+    </div>
+
+    <!-- Contenedor dinámico – JS renderiza las tarjetas aquí -->
+    <div class="articulos-grid" id="grid-negocios"></div>
+
+    <!-- Artículo destacado de negocios con borde azul -->
+    <div class="featured-article" style="border-left-color:#1a4a7a;">
+      <span class="news-cat negocios">Emprendimiento</span>
+      <h3>Chile Tech: El ecosistema que crece a ritmo latinoamericano</h3>
+      <p class="news-text">El ecosistema emprendedor chileno continúa madurando y atrayendo inversión extranjera. Santiago se posiciona entre los cinco principales hubs de startups de América Latina, con más de 2.000 empresas emergentes activas y una comunidad de inversores cada vez más robusta. Programas como Start-Up Chile han creado un efecto multiplicador que está llevando innovación incluso a ciudades intermedias del país.</p>
+    </div>
+
+  </section><!-- /negocios -->
+
+
+  <!-- ===================== SECCIÓN CONTACTO =====================
+       REQUERIMIENTO 3: Formulario de contacto con nombre, mensaje y botón enviar.
+       Sigue el estilo visual del resto del sitio.
+  ============================================================ -->
+  <section id="contacto" class="section">
+
+    <div class="section-heading">
+      <h2>Contacto</h2>
+      <span class="section-label">Contacto</span>
+    </div>
+    <div class="divider"></div>
+
+    <p class="news-text" style="margin-bottom:28px;">
+      ¿Tienes una sugerencia, corrección o deseas enviarnos información? 
+      Completa el formulario y el equipo de <strong>El Faro</strong> se pondrá en contacto contigo.
+    </p>
+
+    <!-- PASO 3: Formulario de contacto
+         - Campo nombre
+         - Campo mensaje (textarea)
+         - Botón enviar que muestra confirmación con JS
+    -->
+    <div class="form-contacto">
+      <h3>Envíanos un mensaje</h3>
+
+      <label class="form-label" for="contacto-nombre">Tu nombre</label>
+      <input type="text" id="contacto-nombre" placeholder="Ej: María González">
+
+      <label class="form-label" for="contacto-mensaje">Tu mensaje</label>
+      <textarea id="contacto-mensaje" placeholder="Escribe tu mensaje, consulta o sugerencia aquí..."></textarea>
+
+      <button class="btn-enviar" onclick="enviarContacto()">Enviar mensaje</button>
+      <div class="msg-exito" id="exito-contacto">
+        ✔ Mensaje enviado. El equipo de El Faro se pondrá en contacto contigo pronto.
+      </div>
+    </div>
+
+  </section><!-- /contacto -->
+
+</main>
+
+<!-- ===== FOOTER: Pie de página del periódico (Requisito 5) =====
+     Fondo: #c9d2d0 | Color de letra: #31231e -->
+<footer>
+  <p>&copy; 2026 <span>El Faro</span> &mdash; Periódico Digital &bull; Santiago, Chile</p>
+  <p style="margin-top:6px; font-size:0.7rem; opacity:0.7; letter-spacing:0.08em;">
+    Todos los derechos reservados &bull; Desarrollado con HTML5 &bull; AIEP Ingeniería en Informática
+  </p>
+</footer>
+
+<!-- ===== SCRIPT COMPLETO – SEMANA 4 =====
+     Incluye los 4 requerimientos JavaScript:
+     1. Reloj en vivo en la cabecera
+     2. Artículos cargados dinámicamente + formulario para agregar
+     3. Formulario de contacto funcional
+     4. Contador de artículos por sección
+-->
+<script>
+
+  /* ============================================================
+     PASO 1 – FECHA Y HORA EN VIVO (Requerimiento 1)
+     
+     Concepto: new Date() captura el momento actual.
+     setInterval() repite la función cada 1000ms (1 segundo).
+     padStart(2, '0') agrega un cero inicial si el número es menor a 10
+     (por ejemplo, el segundo 5 se muestra como "05" en vez de "5").
+  ============================================================ */
+  
+  // Días y meses en español para mostrar la fecha con formato
+  const DIAS   = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const MESES  = ['enero','febrero','marzo','abril','mayo','junio',
+                  'julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+  function actualizarReloj() {
+    const ahora     = new Date();                          // Captura el momento exacto actual
+    const diaSemana = DIAS[ahora.getDay()];               // Número 0-6 → nombre del día
+    const diaMes    = ahora.getDate();                    // Número del día del mes (1-31)
+    const mes       = MESES[ahora.getMonth()];            // Número 0-11 → nombre del mes
+    const anio      = ahora.getFullYear();                // Año con 4 dígitos
+    const horas     = String(ahora.getHours()).padStart(2, '0');    // 0-23 → "00"-"23"
+    const minutos   = String(ahora.getMinutes()).padStart(2, '0'); // 0-59 → "00"-"59"
+    const segundos  = String(ahora.getSeconds()).padStart(2, '0'); // 0-59 → "00"-"59"
+
+    // Construimos el texto completo que irá en la barra superior
+    const texto = `Santiago, Chile — ${diaSemana} ${diaMes} de ${mes} de ${anio}  |  ${horas}:${minutos}:${segundos}`;
+
+    // Insertamos el texto en el span con id="reloj-header"
+    document.getElementById('reloj-header').textContent = texto;
+  }
+
+  // Llamamos inmediatamente para que no tarde 1 segundo en aparecer
+  actualizarReloj();
+  // Luego repetimos cada 1000 milisegundos (1 segundo) → segundos en vivo
+  setInterval(actualizarReloj, 1000);
+
+
+  /* ============================================================
+     PASO 2 – ARTÍCULOS DINÁMICOS (Requerimiento 2)
+     
+     Concepto: Los artículos se guardan en objetos JavaScript.
+     En vez de escribir el HTML a mano para cada artículo,
+     usamos forEach() para recorrer el array y generar las tarjetas.
+     Esto permite agregar artículos nuevos sin tocar el HTML.
+  ============================================================ */
+
+  // Base de datos de artículos por sección (arrays de objetos)
+  const articulosData = {
+    inicio: [
+      {
+        cat: 'General',
+        catClass: '',
+        titulo: 'Chile avanza en la era de la energía solar',
+        texto: 'El Ministerio de Energía anunció esta semana que Chile superó los 5.000 MW de capacidad instalada en energía solar fotovoltaica, consolidándose como líder regional en energías renovables. El plan de expansión contempla nuevas licitaciones en el norte del país, donde la radiación solar es de las más altas del mundo, con el objetivo de alcanzar el 80% de generación limpia antes de 2030.'
+      },
+      {
+        cat: 'General',
+        catClass: '',
+        titulo: 'Nuevo proyecto de ley busca modernizar la educación técnica',
+        texto: 'El Ejecutivo ingresó al Congreso un proyecto de ley que reforma el sistema de educación técnico-profesional en Chile. La iniciativa propone actualizar mallas curriculares para incorporar competencias digitales, inteligencia artificial y programación desde los primeros años de enseñanza media. Expertos del sector educativo aplaudieron la medida.'
+      },
+      {
+        cat: 'General',
+        catClass: '',
+        titulo: 'Temporada de lluvias trae alivio hídrico a la Zona Central',
+        texto: 'Tras varios años de sequía prolongada, la temporada invernal 2026 ha traído precipitaciones por sobre el promedio histórico en las regiones de Valparaíso, Metropolitana y O\'Higgins. Las cuencas del río Maipo y el Cachapoal comenzaron a recuperar sus niveles, generando esperanza para el sector agrícola y el abastecimiento de agua potable.'
+      }
+    ],
+    deporte: [
+      {
+        cat: 'Fútbol',
+        catClass: 'deporte',
+        titulo: 'La Roja Sub-23 clasifica al Preolímpico Sudamericano',
+        texto: 'La selección chilena sub-23 logró su clasificación al Torneo Preolímpico Sudamericano 2026 tras vencer 2-0 a Bolivia en el estadio Monumental. El entrenador del equipo destacó la madurez táctica del grupo y afirmó que el objetivo es llegar a los Juegos Olímpicos de Los Ángeles 2028.'
+      },
+      {
+        cat: 'Tiro',
+        catClass: 'deporte',
+        titulo: 'Francisca Crovetto consigue oro en Copa del Mundo de Tiro',
+        texto: 'La tiradora chilena Francisca Crovetto se colgó la medalla de oro en la Copa del Mundo de Tiro realizada en Múnich, Alemania. La vigente campeona olímpica demostró una vez más su clase mundial al marcar 43/50 en la final de Trap femenino, superando a competidoras de Italia y Turquía.'
+      },
+      {
+        cat: 'Tenis',
+        catClass: 'deporte',
+        titulo: 'Cristian Garín irrumpe en el Top 20 del ranking ATP',
+        texto: 'El tenista chileno Cristian «Gago» Garín alcanzó esta semana el puesto 18 del ranking ATP tras su brillante actuación en el Masters 1000 de Miami, donde llegó hasta la semifinal. Garín derrotó a tres jugadores del Top 30 en el torneo y mostró un tenis sólido desde la línea de base.'
+      }
+    ],
+    negocios: [
+      {
+        cat: 'Tecnología',
+        catClass: 'negocios',
+        titulo: 'Startup chilena Bionix cierra ronda de US$3 millones para prótesis biónicas',
+        texto: 'La startup chilena Bionix cerró una ronda de inversión Serie A por US$3 millones. La empresa utiliza inteligencia artificial para personalizar cada prótesis según las necesidades del paciente. Su objetivo es expandirse a Colombia, Perú y México durante el próximo año.'
+      },
+      {
+        cat: 'Economía',
+        catClass: 'negocios',
+        titulo: 'El comercio electrónico en Chile creció 28% en el primer trimestre 2026',
+        texto: 'Según el informe trimestral de la Cámara de Comercio de Santiago, el e-commerce en Chile experimentó un crecimiento del 28% en el primer trimestre de 2026. Las categorías con mayor expansión fueron tecnología, salud y bienestar, y alimentos gourmet.'
+      },
+      {
+        cat: 'Emprendimiento',
+        catClass: 'negocios',
+        titulo: 'Corfo lanza programa para apoyar a 500 emprendedoras de regiones',
+        texto: 'La Corporación de Fomento de la Producción (Corfo) anunció el lanzamiento del programa «Mujeres que Innovan 2026». El programa entrega capital semilla de hasta $6 millones de pesos, acceso a mentoría especializada y acompañamiento durante 12 meses.'
+      }
+    ]
+  };
+
+  /* renderizarArticulos(seccion)
+     ─────────────────────────────
+     Esta función toma el array de artículos de una sección
+     y genera el HTML de cada tarjeta dentro del contenedor grid.
+     También actualiza el contador de artículos (Requerimiento 4).
+  */
+  function renderizarArticulos(seccion) {
+    const grid    = document.getElementById('grid-' + seccion);    // Contenedor grid de la sección
+    const counter = document.getElementById('contador-' + seccion); // Badge del contador
+    const lista   = articulosData[seccion];                         // Array de artículos de esa sección
+
+    // Limpiar el contenedor antes de volver a renderizar
+    grid.innerHTML = '';
+
+    // forEach recorre cada artículo del array y crea una tarjeta
+    lista.forEach(function(art) {
+      // Creamos el elemento <article> con las clases correctas
+      const card = document.createElement('article');
+      card.className = 'articulo-card';
+
+      // Llenamos el interior de la tarjeta con el HTML del artículo
+      card.innerHTML = `
+        <span class="news-cat ${art.catClass}">${art.cat}</span>
+        <h3 class="articulo-titulo">
+          <a href="#">${art.titulo}</a>
+        </h3>
+        <p class="news-text">${art.texto}</p>
+      `;
+
+      // Insertamos la tarjeta en el grid de la sección
+      grid.appendChild(card);
+    });
+
+    // PASO 4: Actualizar el contador con el total de artículos
+    counter.textContent = lista.length;
+  }
+
+  /* agregarArticulo(seccion, categoria)
+     ──────────────────────────────────
+     Función llamada por el botón "Publicar artículo" de cada sección.
+     Lee los campos del formulario, valida que no estén vacíos,
+     agrega el nuevo artículo al array y vuelve a renderizar.
+  */
+  function agregarArticulo(seccion, categoria) {
+    // Leer el valor de los campos de texto por su ID
+    const inputTitulo = document.getElementById('titulo-' + seccion);
+    const inputDesc   = document.getElementById('desc-' + seccion);
+    const msgExito    = document.getElementById('exito-' + seccion);
+
+    const titulo = inputTitulo.value.trim(); // .trim() elimina espacios al inicio/fin
+    const desc   = inputDesc.value.trim();
+
+    // Validación: si algún campo está vacío, alertamos al usuario y detenemos
+    if (!titulo || !desc) {
+      alert('Por favor, completa el título y la descripción del artículo.');
+      return; // 'return' detiene la ejecución de la función aquí
+    }
+
+    // Determinar la clase CSS de la categoría según la sección
+    const catClass = seccion === 'inicio' ? '' : seccion;
+
+    // Crear el objeto del nuevo artículo y agregarlo al array
+    articulosData[seccion].push({
+      cat:      categoria,
+      catClass: catClass,
+      titulo:   titulo,
+      texto:    desc
+    });
+
+    // Volver a renderizar todos los artículos (incluyendo el nuevo)
+    renderizarArticulos(seccion);
+
+    // Limpiar los campos del formulario después de publicar
+    inputTitulo.value = '';
+    inputDesc.value   = '';
+
+    // Mostrar mensaje de éxito brevemente (3 segundos)
+    msgExito.style.display = 'block';
+    setTimeout(function() {
+      msgExito.style.display = 'none';
+    }, 3000); // 3000 ms = 3 segundos
+  }
+
+
+  /* ============================================================
+     PASO 3 – FORMULARIO DE CONTACTO (Requerimiento 3)
+     
+     Concepto: Al hacer clic en "Enviar mensaje", la función
+     lee los campos de nombre y mensaje, valida que no estén vacíos
+     y muestra un mensaje de confirmación al usuario.
+  ============================================================ */
+  function enviarContacto() {
+    const nombre  = document.getElementById('contacto-nombre').value.trim();
+    const mensaje = document.getElementById('contacto-mensaje').value.trim();
+    const msgExito = document.getElementById('exito-contacto');
+
+    // Validar que ambos campos tengan contenido
+    if (!nombre || !mensaje) {
+      alert('Por favor, completa tu nombre y tu mensaje antes de enviar.');
+      return;
+    }
+
+    // Mostrar confirmación con el nombre del usuario
+    msgExito.textContent = `✔ Gracias, ${nombre}. Tu mensaje fue recibido. Te contactaremos pronto.`;
+    msgExito.style.display = 'block';
+
+    // Limpiar los campos del formulario
+    document.getElementById('contacto-nombre').value  = '';
+    document.getElementById('contacto-mensaje').value = '';
+
+    // Ocultar el mensaje después de 4 segundos
+    setTimeout(function() {
+      msgExito.style.display = 'none';
+    }, 4000);
+  }
+
+
+  /* ============================================================
+     NAVEGACIÓN ENTRE SECCIONES (función existente, sin cambios)
+  ============================================================ */
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    document.querySelector('main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+
+  /* ============================================================
+     INICIALIZACIÓN – Se ejecuta al cargar la página
+     
+     Renderizamos los artículos de las 3 secciones con los datos
+     del array articulosData, tal como si vinieran de una base de datos.
+  ============================================================ */
+  window.addEventListener('DOMContentLoaded', function() {
+    renderizarArticulos('inicio');    // Renderizar artículos de Inicio
+    renderizarArticulos('deporte');   // Renderizar artículos de Deporte
+    renderizarArticulos('negocios');  // Renderizar artículos de Negocios
+  });
+
+</script>
+
+</body>
+</html>
